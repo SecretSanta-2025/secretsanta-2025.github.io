@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>La Ghigliottina - Secret Santa Edition!</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(#0a2e6f, #081f4a);
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question {
+  background: #f5c542;
+  color: #0a2e6f;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+}
+
+.answers button {
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: #0a2e6f;
+}
+
+/* Animazioni risposta */
+.answers button.correct {
+  animation: flashGreen 0.4s alternate 4;
+}
+
+.answers button.wrong {
+  animation: flashRed 0.4s alternate 4;
+}
+
+@keyframes flashGreen {
+  from { background: white; }
+  to { background: #2ecc71; }
+}
+
+@keyframes flashRed {
+  from { background: white; }
+  to { background: #e74c3c; }
+}
+
+.right {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.timer-wrapper {
+  display: none;
+  justify-content: center;
+}
+
+.timer {
+  width: 100px;
+  height: 100px;
+  background: #f5c542;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: white;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.05); }
+}
+
+.gift-box {
+  display: none;
+}
+
+.gift-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.gift-box button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.final {
+  display: none;
+  background: #b30000;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header>🎅 La Ghigliottina - Secret Santa Edition!</header>
+
+<main>
+  <div class="left">
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+
+    <div class="timer-wrapper" id="timerWrapper">
+      <div class="timer" id="timer">90</div>
+    </div>
+
+    <div class="gift-box" id="giftBox">
+      <input id="giftInput" placeholder="Scrivi qui il regalo..." />
+      <button onclick="reveal()">Scopri se hai indovinato!</button>
+    </div>
+
+    <div class="final" id="finalMessage"></div>
+  </div>
+
+  <div class="right">
+    <h3>Parole collegate</h3>
+    <div id="words"></div>
+  </div>
+</main>
+
+<script>
+const questions = [
+  { answers: ["Fano", "Pesaro"], correct: "Pesaro" },
+  { answers: ["Insetti", "Ginnaste"], correct: "Ginnaste" },
+  { answers: ["Settembre", "Giugno"], correct: "Settembre" },
+  { answers: ["Mondiali", "Europei"], correct: "Mondiali" },
+  { answers: ["Artistica", "Acrobatica"], correct: "Acrobatica" }
+];
+
+let current = 0;
+let prize = 100;
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const wordsEl = document.getElementById("words");
+
+function loadQuestion() {
+  questionEl.textContent = `Indizio numero ${current + 1}`;
+  answersEl.innerHTML = "";
+
+  questions[current].answers.forEach(ans => {
+    const btn = document.createElement("button");
+    btn.textContent = ans;
+    btn.onclick = () => selectAnswer(btn, ans);
+    answersEl.appendChild(btn);
+  });
+}
+
+function selectAnswer(btn, ans) {
+  const correct = questions[current].correct;
+
+  if (ans === correct) {
+    btn.classList.add("correct");
+  } else {
+    btn.classList.add("wrong");
+    prize /= 2;
+  }
+
+  setTimeout(() => {
+    wordsEl.innerHTML += `<div>${correct}</div>`;
+    current++;
+
+    if (current < questions.length) {
+      loadQuestion();
+    } else {
+      startTimer();
+    }
+  }, 2000);
+}
+
+function startTimer() {
+  questionEl.style.display = "none";
+  answersEl.style.display = "none";
+  document.getElementById("timerWrapper").style.display = "flex";
+
+  let time = 90;
+  const timerEl = document.getElementById("timer");
+
+  const interval = setInterval(() => {
+    time--;
+    timerEl.textContent = time;
+    if (time === 0) {
+      clearInterval(interval);
+      document.getElementById("giftBox").style.display = "block";
+    }
+  }, 1000);
+}
+
+function reveal() {
+  document.getElementById("finalMessage").style.display = "block";
+  document.getElementById("finalMessage").innerHTML =
+    `🎁 Un contributo pari a <strong>${prize}€</strong> per l'acquisto di 1 biglietto per i Campionati del Mondo di Ginnastica Acrobatica (17–26 settembre a Pesaro) – quando sarà possibile comprarli! :D`;
+}
+
+document.addEventListener("DOMContentLoaded", loadQuestion);
+</script>
+
+</body>
+</html>
