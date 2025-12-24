@@ -13,64 +13,64 @@ body {
 }
 
 header {
-  position: relative;
   text-align: center;
-  padding: 30px 20px 10px;
+  padding: 20px;
+  font-size: 2rem;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2.2rem;
+/* MONTEPREMI IN ALTO A DESTRA */
+.prize-box {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  backdrop-filter: blur(4px);
 }
-
-.prize {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  background: #f5c542;
-  color: #0a2e6f;
-  padding: 12px 18px;
-  border-radius: 10px;
-  font-size: 1.3rem;
-  font-weight: bold;
+.prize-box strong {
+  font-size: 1.05rem;
 }
 
 main {
-  max-width: 1100px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 40px;
-  padding: 30px 20px;
+  gap: 20px;
+  padding: 20px;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 20px;
 }
 
 .question {
   background: #f5c542;
   color: #0a2e6f;
-  padding: 28px 30px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 10px;
   text-align: center;
-  font-size: 1.25rem;
-  letter-spacing: 2px;
   text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
 }
 
 .answers button {
-  padding: 20px 25px;
-  margin-bottom: 18px;
-  font-size: 1.2rem;
-  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   background: white;
   color: #0a2e6f;
-  transition: background-color 0.3s ease;
 }
 
 .answers button.correct {
@@ -92,86 +92,90 @@ main {
 }
 
 .right {
-  background: rgba(255,255,255,0.15);
-  padding: 28px 24px;
-  border-radius: 18px;
-  font-size: 1.1rem;
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 12px;
 }
 
 .timer-wrapper {
-  display: flex;
+  display: none;
   justify-content: center;
-  margin-top: 18px;
 }
 
 .timer {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   background: #f5c542;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3.6rem;
+  font-size: 2.5rem;
   color: white;
   animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-  50% { transform: scale(1.07); }
+  50% { transform: scale(1.05); }
 }
 
+/* SEZIONE INDOVINA REGALO */
 .gift-box {
-  display: block;
-  background: rgba(255,255,255,0.22);
-  padding: 28px 26px;
-  border-radius: 18px;
+  display: none;
+  background: rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.gift-box .gift-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
 }
 
 .gift-box input {
   width: 100%;
-  padding: 16px 14px;
-  font-size: 1.15rem;
+  padding: 12px;
+  font-size: 1rem;
   border-radius: 10px;
   border: none;
+  outline: none;
+  background: white;          /* input bianco */
+  color: #0a2e6f;
+  box-sizing: border-box;
 }
 
 .gift-box button {
-  margin-top: 18px;
+  margin-top: 10px;
   width: 100%;
-  padding: 16px;
-  font-size: 1.2rem;
+  padding: 12px;
+  font-size: 1.1rem;
   cursor: pointer;
-  border-radius: 14px;
+  border-radius: 10px;
   border: none;
   background: #f5c542;
   color: #0a2e6f;
   font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.gift-box button:hover {
-  background: #ddb833;
 }
 
 .final {
   display: none;
   background: #b30000;
-  padding: 30px 26px;
-  border-radius: 20px;
-  margin-top: 25px;
-  font-size: 1.2rem;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+  color: white;
 }
 
+/* DISCLAIMER */
 footer {
-  margin-top: 45px;
-  padding: 20px 28px;
-  background: rgba(255,255,255,0.18);
-  font-size: 1rem;
-  line-height: 1.6;
+  margin-top: 40px;
+  padding: 15px 20px;
+  background: rgba(255,255,255,0.12);
+  font-size: 0.9rem;
+  line-height: 1.4;
   text-align: center;
 }
-
 footer a {
   color: #ffd700;
   text-decoration: none;
@@ -181,10 +185,12 @@ footer a {
 
 <body>
 
-<header>
-  <h1>🎅 La Ghigliottina - Secret Santa Edition!</h1>
-  <div class="prize">Montepremi: <span id="prize">100</span>€</div>
-</header>
+<header>🎅 La Ghigliottina - Secret Santa Edition!</header>
+
+<!-- MONTEPREMI -->
+<div class="prize-box">
+  Montepremi: <strong><span id="prizeValue">100</span>€</strong>
+</div>
 
 <main>
   <div class="left">
@@ -195,9 +201,11 @@ footer a {
       <div class="timer" id="timer">90</div>
     </div>
 
+    <!-- ORA: questa sezione appare quando parte il timer -->
     <div class="gift-box" id="giftBox">
+      <div class="gift-title">Prova a indovinare il regalo!</div>
       <input id="giftInput" placeholder="Scrivi qui il regalo..." />
-      <button onclick="reveal()">Scopri se hai indovinato!</button>
+      <button id="revealBtn">Scopri se hai indovinato!</button>
     </div>
 
     <div class="final" id="finalMessage"></div>
@@ -212,7 +220,10 @@ footer a {
 <footer>
   Questo sito ospita un gioco interattivo creato esclusivamente per uno scambio
   <strong>Secret Santa privato</strong>.  
-  Non raccoglie dati personali e non gestisce pagamenti.
+  Non raccoglie dati personali, non richiede registrazione e non gestisce pagamenti.
+  Progetto amatoriale a scopo ludico.
+  <br>
+  <a href="about.html">Ulteriori informazioni</a>
 </footer>
 
 <script>
@@ -226,15 +237,24 @@ const questions = [
 
 let current = 0;
 let prize = 100;
+
+/* TIMER: per poterlo interrompere dal pulsante */
 let timerInterval = null;
-let revealed = false;
+let time = 90;
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const wordsEl = document.getElementById("words");
-const prizeEl = document.getElementById("prize");
+const prizeValueEl = document.getElementById("prizeValue");
+
+function updatePrizeDisplay() {
+  prizeValueEl.textContent = prize;
+}
 
 function loadQuestion() {
+  questionEl.style.display = "block";
+  answersEl.style.display = "flex";
+
   questionEl.textContent = `Indizio numero ${current + 1}`;
   answersEl.innerHTML = "";
 
@@ -253,8 +273,8 @@ function selectAnswer(btn, ans) {
     btn.classList.add("correct");
   } else {
     btn.classList.add("wrong");
-    prize /= 2;
-    prizeEl.textContent = prize;
+    prize = prize / 2;
+    updatePrizeDisplay();
   }
 
   setTimeout(() => {
@@ -272,34 +292,52 @@ function selectAnswer(btn, ans) {
 function startTimer() {
   questionEl.style.display = "none";
   answersEl.style.display = "none";
+
   document.getElementById("timerWrapper").style.display = "flex";
+
+  /* mostra subito la sezione “indovina regalo” */
   document.getElementById("giftBox").style.display = "block";
 
-  let time = 90;
+  time = 90;
   const timerEl = document.getElementById("timer");
+  timerEl.textContent = time;
 
+  if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     time--;
     timerEl.textContent = time;
-    if (time === 0) {
+
+    if (time <= 0) {
       clearInterval(timerInterval);
-      reveal();
+      timerInterval = null;
+      reveal(); // allo scadere: mostra comunque il messaggio finale
     }
   }, 1000);
 }
 
 function reveal() {
-  if (revealed) return;
-  revealed = true;
+  /* interrompe il timer se ancora attivo */
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
 
-  if (timerInterval) clearInterval(timerInterval);
+  /* opzionale: nasconde timer e box per lasciare spazio al finale */
+  document.getElementById("timerWrapper").style.display = "none";
+  document.getElementById("giftBox").style.display = "none";
 
-  document.getElementById("finalMessage").style.display = "block";
-  document.getElementById("finalMessage").innerHTML =
+  const finalEl = document.getElementById("finalMessage");
+  finalEl.style.display = "block";
+  finalEl.innerHTML =
     `🎁 Un contributo pari a <strong>${prize}€</strong> per l'acquisto di 1 biglietto per i Campionati del Mondo di Ginnastica Acrobatica (17–26 settembre a Pesaro) – quando sarà possibile comprarli! :D`;
 }
 
-document.addEventListener("DOMContentLoaded", loadQuestion);
+document.addEventListener("DOMContentLoaded", () => {
+  updatePrizeDisplay();
+  loadQuestion();
+
+  document.getElementById("revealBtn").addEventListener("click", reveal);
+});
 </script>
 
 </body>
