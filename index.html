@@ -12,59 +12,60 @@ body {
   color: white;
 }
 
-/* HEADER */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+  position: relative;
+  text-align: center;
+  padding: 30px 20px 10px;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 
 .prize {
+  position: absolute;
+  top: 30px;
+  right: 30px;
   background: #f5c542;
   color: #0a2e6f;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 1.2rem;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
-/* MAIN */
 main {
+  max-width: 1100px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  padding: 20px;
+  gap: 30px;
+  padding: 30px 20px;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
-/* QUESTION */
 .question {
   background: #f5c542;
   color: #0a2e6f;
-  padding: 16px;
-  border-radius: 10px;
+  padding: 22px;
+  border-radius: 14px;
   text-align: center;
-  text-transform: uppercase;
+  font-size: 1.2rem;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-/* ANSWERS */
 .answers button {
-  padding: 14px;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 14px;
+  font-size: 1.15rem;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   background: white;
@@ -89,81 +90,73 @@ main {
   to { background: #e74c3c; }
 }
 
-/* RIGHT COLUMN */
 .right {
-  background: rgba(255,255,255,0.1);
-  padding: 15px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.12);
+  padding: 20px;
+  border-radius: 16px;
 }
 
-/* TIMER */
 .timer-wrapper {
   display: none;
   justify-content: center;
 }
 
 .timer {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   background: #f5c542;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 3.2rem;
   color: white;
   animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.07); }
 }
 
-/* GIFT BOX */
 .gift-box {
   display: none;
-  background: rgba(255,255,255,0.15);
-  padding: 15px;
-  border-radius: 10px;
+  background: rgba(255,255,255,0.18);
+  padding: 22px;
+  border-radius: 14px;
 }
 
 .gift-box input {
   width: 100%;
-  padding: 10px;
-  font-size: 1rem;
+  padding: 14px;
+  font-size: 1.1rem;
 }
 
 .gift-box button {
-  margin-top: 10px;
+  margin-top: 14px;
   width: 100%;
-  padding: 10px;
-  font-size: 1.1rem;
+  padding: 14px;
+  font-size: 1.15rem;
   cursor: pointer;
 }
 
-/* FINAL MESSAGE */
 .final {
   display: none;
   background: #b30000;
-  padding: 25px;
-  border-radius: 15px;
+  padding: 30px;
+  border-radius: 18px;
   margin-top: 20px;
-  color: white;
+  font-size: 1.1rem;
 }
 
-/* DISCLAIMER */
 footer {
   margin-top: 40px;
-  padding: 15px 20px;
-  background: rgba(255,255,255,0.12);
-  font-size: 0.9rem;
-  line-height: 1.4;
+  padding: 18px 25px;
+  background: rgba(255,255,255,0.14);
+  font-size: 0.95rem;
+  line-height: 1.5;
   text-align: center;
 }
-footer a {
-  color: #ffd700;
-  text-decoration: none;
-}
+footer a { color: #ffd700; }
 </style>
 </head>
 
@@ -200,10 +193,7 @@ footer a {
 <footer>
   Questo sito ospita un gioco interattivo creato esclusivamente per uno scambio
   <strong>Secret Santa privato</strong>.  
-  Non raccoglie dati personali, non richiede registrazione e non gestisce pagamenti.
-  Progetto amatoriale a scopo ludico.
-  <br>
-  <a href="about.html">Ulteriori informazioni</a>
+  Non raccoglie dati personali e non gestisce pagamenti.
 </footer>
 
 <script>
@@ -217,6 +207,8 @@ const questions = [
 
 let current = 0;
 let prize = 100;
+let timerInterval = null;
+let revealed = false;
 
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
@@ -262,21 +254,27 @@ function startTimer() {
   questionEl.style.display = "none";
   answersEl.style.display = "none";
   document.getElementById("timerWrapper").style.display = "flex";
+  document.getElementById("giftBox").style.display = "block";
 
   let time = 90;
   const timerEl = document.getElementById("timer");
 
-  const interval = setInterval(() => {
+  timerInterval = setInterval(() => {
     time--;
     timerEl.textContent = time;
     if (time === 0) {
-      clearInterval(interval);
-      document.getElementById("giftBox").style.display = "block";
+      clearInterval(timerInterval);
+      reveal();
     }
   }, 1000);
 }
 
 function reveal() {
+  if (revealed) return;
+  revealed = true;
+
+  if (timerInterval) clearInterval(timerInterval);
+
   document.getElementById("finalMessage").style.display = "block";
   document.getElementById("finalMessage").innerHTML =
     `🎁 Un contributo pari a <strong>${prize}€</strong> per l'acquisto di 1 biglietto per i Campionati del Mondo di Ginnastica Acrobatica (17–26 settembre a Pesaro) – quando sarà possibile comprarli! :D`;
