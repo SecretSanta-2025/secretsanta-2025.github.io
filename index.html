@@ -12,12 +12,29 @@ body {
   color: white;
 }
 
+/* HEADER */
 header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
+}
+
+header h1 {
+  margin: 0;
   font-size: 2rem;
 }
 
+.prize {
+  background: #f5c542;
+  color: #0a2e6f;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* MAIN */
 main {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -31,6 +48,7 @@ main {
   gap: 20px;
 }
 
+/* QUESTION */
 .question {
   background: #f5c542;
   color: #0a2e6f;
@@ -41,11 +59,7 @@ main {
   letter-spacing: 2px;
 }
 
-.answers {
-  display: flex;
-  flex-direction: column;
-}
-
+/* ANSWERS */
 .answers button {
   padding: 14px;
   margin-bottom: 10px;
@@ -75,26 +89,28 @@ main {
   to { background: #e74c3c; }
 }
 
+/* RIGHT COLUMN */
 .right {
   background: rgba(255,255,255,0.1);
   padding: 15px;
   border-radius: 12px;
 }
 
+/* TIMER */
 .timer-wrapper {
   display: none;
   justify-content: center;
 }
 
 .timer {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   background: #f5c542;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: white;
   animation: pulse 1s infinite;
 }
@@ -103,8 +119,12 @@ main {
   50% { transform: scale(1.05); }
 }
 
+/* GIFT BOX */
 .gift-box {
   display: none;
+  background: rgba(255,255,255,0.15);
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .gift-box input {
@@ -121,6 +141,7 @@ main {
   cursor: pointer;
 }
 
+/* FINAL MESSAGE */
 .final {
   display: none;
   background: #b30000;
@@ -148,7 +169,10 @@ footer a {
 
 <body>
 
-<header>🎅 La Ghigliottina - Secret Santa Edition!</header>
+<header>
+  <h1>🎅 La Ghigliottina - Secret Santa Edition!</h1>
+  <div class="prize">Montepremi: <span id="prize">100</span>€</div>
+</header>
 
 <main>
   <div class="left">
@@ -197,6 +221,7 @@ let prize = 100;
 const questionEl = document.getElementById("question");
 const answersEl = document.getElementById("answers");
 const wordsEl = document.getElementById("words");
+const prizeEl = document.getElementById("prize");
 
 function loadQuestion() {
   questionEl.textContent = `Indizio numero ${current + 1}`;
@@ -218,6 +243,7 @@ function selectAnswer(btn, ans) {
   } else {
     btn.classList.add("wrong");
     prize /= 2;
+    prizeEl.textContent = prize;
   }
 
   setTimeout(() => {
