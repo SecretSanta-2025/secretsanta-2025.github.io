@@ -40,36 +40,37 @@ main {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 30px;
+  gap: 40px;
   padding: 30px 20px;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 35px;
 }
 
 .question {
   background: #f5c542;
   color: #0a2e6f;
-  padding: 22px;
+  padding: 28px 30px;
   border-radius: 14px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .answers button {
-  padding: 18px;
-  margin-bottom: 14px;
-  font-size: 1.15rem;
-  border-radius: 12px;
+  padding: 20px 25px;
+  margin-bottom: 18px;
+  font-size: 1.2rem;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
   background: white;
   color: #0a2e6f;
+  transition: background-color 0.3s ease;
 }
 
 .answers button.correct {
@@ -91,25 +92,27 @@ main {
 }
 
 .right {
-  background: rgba(255,255,255,0.12);
-  padding: 20px;
-  border-radius: 16px;
+  background: rgba(255,255,255,0.15);
+  padding: 28px 24px;
+  border-radius: 18px;
+  font-size: 1.1rem;
 }
 
 .timer-wrapper {
-  display: none;
+  display: flex;
   justify-content: center;
+  margin-top: 18px;
 }
 
 .timer {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   background: #f5c542;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   color: white;
   animation: pulse 1s infinite;
 }
@@ -119,44 +122,60 @@ main {
 }
 
 .gift-box {
-  display: none;
-  background: rgba(255,255,255,0.18);
-  padding: 22px;
-  border-radius: 14px;
+  display: block;
+  background: rgba(255,255,255,0.22);
+  padding: 28px 26px;
+  border-radius: 18px;
 }
 
 .gift-box input {
   width: 100%;
-  padding: 14px;
-  font-size: 1.1rem;
+  padding: 16px 14px;
+  font-size: 1.15rem;
+  border-radius: 10px;
+  border: none;
 }
 
 .gift-box button {
-  margin-top: 14px;
+  margin-top: 18px;
   width: 100%;
-  padding: 14px;
-  font-size: 1.15rem;
+  padding: 16px;
+  font-size: 1.2rem;
   cursor: pointer;
+  border-radius: 14px;
+  border: none;
+  background: #f5c542;
+  color: #0a2e6f;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.gift-box button:hover {
+  background: #ddb833;
 }
 
 .final {
   display: none;
   background: #b30000;
-  padding: 30px;
-  border-radius: 18px;
-  margin-top: 20px;
-  font-size: 1.1rem;
+  padding: 30px 26px;
+  border-radius: 20px;
+  margin-top: 25px;
+  font-size: 1.2rem;
 }
 
 footer {
-  margin-top: 40px;
-  padding: 18px 25px;
-  background: rgba(255,255,255,0.14);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  margin-top: 45px;
+  padding: 20px 28px;
+  background: rgba(255,255,255,0.18);
+  font-size: 1rem;
+  line-height: 1.6;
   text-align: center;
 }
-footer a { color: #ffd700; }
+
+footer a {
+  color: #ffd700;
+  text-decoration: none;
+}
 </style>
 </head>
 
